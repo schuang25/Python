@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playground</title>
+</head>
+<body>
+    <h1 style="text-align: center; height: 200px;">Welcome!</h1>
+    <div style="display: flex; justify-content: space-around;">
+        {% for x in range(0, boxes): %}
+            {% if x > 0 and x % 4 == 0 %}
+                </div><div style="display: flex; justify-content: space-around;">
+            {% endif %}
+            <p style="width: 200px; height: 200px; border: 3px solid black; border-radius: 10px; background-color: {{bgcolor}}"></p>
+        {% endfor %}
+    </div> 
+</body>
+</html>
