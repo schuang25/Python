@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+tr {
+    width: 600px;
+    height: 50px;
+}
+
+td {
+    width: 200px;
+    text-align: center;
+    vertical-align: middle;
+    border-top: solid 2px gray;
+}
+
+#header {
+    background-color: slategray;
+    color: goldenrod;
+}
