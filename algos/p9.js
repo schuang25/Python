@@ -71,25 +71,29 @@ const expected7 = false;
 function bracesValid(str) {
     var open_pairs = [];
     for (const char of str) {
-        if (char == '(' || char == '[' || char == '{')
-            open_pairs.push(char)
-        else if (char == ')') {
-            if (open_pairs[open_pairs.length - 1] == '(')
-                open_pairs.pop();
-            else
-                return false;
-        }
-        else if (char == ']') {
-            if (open_pairs[open_pairs.length - 1] == '[')
-                open_pairs.pop();
-            else
-                return false;
-        }
-        else if (char == '}') {
-            if (open_pairs[open_pairs.length - 1] == '{')
-                open_pairs.pop();
-            else
-                return false;
+        switch(char) {
+            case '(': case '[': case '{':
+                open_pairs.push(char);
+                break;
+            case ')':
+                if (open_pairs[open_pairs.length - 1] == '(')
+                    open_pairs.pop();
+                else
+                    return false;
+                break;
+            case ']':
+                if (open_pairs[open_pairs.length - 1] == '[')
+                    open_pairs.pop();
+                else
+                    return false;
+                break;
+            case '}':
+                if (open_pairs[open_pairs.length - 1] == '{')
+                    open_pairs.pop();
+                else
+                    return false;
+                break;
+            default: continue;
         }
     }
     return open_pairs.length == 0;
