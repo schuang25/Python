@@ -43,7 +43,15 @@ function rotateStr(str, amnt) {
         rotate += str.length;
     if (rotate == 0)
         return str;
-    return str.substring(str.length - rotate) + str.substring(0, str.length - rotate)
+    // return str.substring(str.length - rotate) + str.substring(0, str.length - rotate)
+    var output = "";
+    for (var i = 0; i < rotate; i++) {
+        output = str[str.length - 1 - i] + output
+    }
+    for (var i = 0; i < str.length - rotate; i++) {
+        output += str[i]
+    }
+    return output;
 }
 
 console.log(rotateStr(str, rotateAmnt1))
