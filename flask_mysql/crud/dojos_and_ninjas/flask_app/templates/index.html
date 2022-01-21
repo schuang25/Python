@@ -8,6 +8,16 @@
     <link rel="icon" href="data:,">
 </head>
 <body>
-    
+    <h2>New Dojo</h2>
+    <form action='/create_dojo' method='post'>
+        <input type='text' name='name'><br>
+        <input type='submit' value='Create'>
+    </form>
+    <br>
+    <h1>All Dojos</h1>
+    {% for dojo in dojos %}
+        <p><a href='/dojos/{{dojo.id}}'>{{dojo.name}}</a></p>
+    {% endfor %}
+    <a href='/ninja'>Add Ninja</a>
 </body>
 </html>

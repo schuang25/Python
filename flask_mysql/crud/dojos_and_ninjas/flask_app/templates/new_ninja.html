@@ -8,6 +8,23 @@
     <link rel="icon" href="data:,">
 </head>
 <body>
-    
+    <h1>New Ninja</h1>
+    <form action='/create_ninja' method='post'>
+        <label for='location'>Dojo: </label>
+        <select name='location'>
+            {% for dojo in dojos %}
+                <option value='{{dojo.id}}'>{{dojo.name}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for='fname'>First Name:</label>
+        <input type='text' name='fname'><br>
+        <label for='lname'>Last Name:</label>
+        <input type='text' name='lname'><br>
+        <label for='age'>Age:</label>
+        <input type='text' name='age'><br>
+        <input type='submit' value='Create'>
+    </form>
+    <a href='/dojos'>Home</a>
 </body>
 </html>
