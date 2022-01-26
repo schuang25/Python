@@ -37,12 +37,12 @@ class Account:
     @classmethod
     def get_one_by_email(cls, data):
         query = "SELECT * FROM accounts WHERE email = %(email)s;"
-        return connectToMySQL(DATABASE).query_db(query, data)
+        return cls(connectToMySQL(DATABASE).query_db(query, data)[0])
     
     @classmethod
     def get_one_by_id(cls, data):
         query = "SELECT * FROM accounts WHERE id = %(uuid)s;"
-        return connectToMySQL(DATABASE).query_db(query, data)
+        return cls(connectToMySQL(DATABASE).query_db(query, data)[0])
 
     @staticmethod
     def validate_registration(data):
@@ -81,7 +81,7 @@ class Account:
         if not acc:
             flash("Invalid login credentials", "err_login_creds")
             is_valid = False
-        elif not bcrypt.check_password_hash(acc[0]['password'], data['login_pass']):
+        elif not bcrypt.check_password_hash(acc.password, data['login_pass']):
             flash("Invalid login credentials", "err_login_creds")
             is_valid = False
         return is_valid

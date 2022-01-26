@@ -3,8 +3,6 @@ from flask_app.models.account import Account
 from flask import render_template, request, redirect, session
 from flask_bcrypt import Bcrypt
 
-bcrypt = Bcrypt(app)
-
 @app.route('/process', methods=["POST"])
 def process_form():
     if request.form['action'] == 'register':
@@ -25,7 +23,7 @@ def process_form():
         if not Account.validate_login(request.form):
             return redirect('/')
         user = Account.get_one_by_email(request.form)
-        session['uuid'] = user[0]['id']
+        session['uuid'] = user.id
         return redirect('/success')
 
 @app.route('/logout')

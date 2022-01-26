@@ -12,4 +12,4 @@ def success():
         return redirect('/')
     acc = Account.get_one_by_id(session)
     print(acc)
-    return render_template("success.html", account=acc[0])
+    return render_template("success.html", account=acc)
