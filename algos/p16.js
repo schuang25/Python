@@ -55,4 +55,13 @@ const expected3 = 0;
  * @param {number} num
  * @returns {number}
  */
-function recursiveSigma(num) {}
+function recursiveSigma(num) {
+    if (num <= 0)
+        return 0;
+    else
+        return Math.floor(num) + recursiveSigma(Math.floor(num) - 1);
+}
+
+console.log(recursiveSigma(num1));
+console.log(recursiveSigma(num2));
+console.log(recursiveSigma(num3));
