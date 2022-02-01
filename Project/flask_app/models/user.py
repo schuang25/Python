@@ -7,13 +7,12 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
-NAME_REGEX = re.compile(r'^[a-zA-Z]{2,}$')
+USERNAME_REGEX = re.compile(r'^[a-zA-Z][a-zA-Z0-9]{1,19}$')
 
-class Account:
+class User:
     def __init__(self, data):
         self.id = data['id']
-        self.first_name = data['first_name']
-        self.last_name = data['last_name']
+        self.username = data['username']
         self.email = data['email']
         self.password = data['password']
         self.created_at = data['created_at']
@@ -21,48 +20,42 @@ class Account:
 
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM accounts;"
+        query = "SELECT * FROM users;"
         results = connectToMySQL(DATABASE).query_db(query)
-        accounts = []
-        for account in results:
-            print(account)
-            accounts.append(cls(account))
-        return accounts
+        users = []
+        for user in results:
+            print(user)
+            users.append(cls(user))
+        return users
 
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO accounts (first_name, last_name, email, password, created_at, updated_at) VALUES (%(fname)s, %(lname)s, %(email)s, %(password)s, NOW(), NOW());"
+        query = "INSERT INTO users (username, email, password, created_at, updated_at) VALUES (%(username)s, %(email)s, %(password)s, NOW(), NOW());"
         return connectToMySQL(DATABASE).query_db(query, data)
     
     @classmethod
     def get_one_by_email(cls, data):
-        query = "SELECT * FROM accounts WHERE email = %(email)s;"
+        query = "SELECT * FROM users WHERE email = %(email)s;"
         return cls(connectToMySQL(DATABASE).query_db(query, data)[0])
     
     @classmethod
     def get_one_by_id(cls, data):
-        query = "SELECT * FROM accounts WHERE id = %(uuid)s;"
+        query = "SELECT * FROM users WHERE id = %(uuid)s;"
         return cls(connectToMySQL(DATABASE).query_db(query, data)[0])
 
     @staticmethod
     def validate_registration(data):
         is_valid = True
-        if len(data['fname']) < 2:
-            flash("First name must be at least 2 characters", "err_fname")
+        if len(data['username']) < 2:
+            flash("Username must be at least 2 characters", "err_username")
             is_valid = False
-        elif not NAME_REGEX.match(data['fname']):
-            flash("First name must consist of only letters", "err_fname")
-            is_valid = False
-        if len(data['lname']) < 2:
-            flash("Last name must be at least 2 characters", "err_lname")
-            is_valid = False
-        elif not NAME_REGEX.match(data['lname']):
-            flash("Last name must consist of only letters", "err_lname")
+        elif not USERNAME_REGEX.match(data['username']):
+            flash("Username must consist of only alphanumeric characters, starting with a letter", "err_username")
             is_valid = False
         if not EMAIL_REGEX.match(data['email']):
             flash("Email is not valid!", "err_email")
             is_valid = False
-        if Account.get_one_by_email(data):
+        if User.get_one_by_email(data):
             flash("Email already exists in database", "err_email")
             is_valid = False
         if len(data['password']) < 8:
@@ -76,7 +69,7 @@ class Account:
     @staticmethod
     def validate_login(data):
         is_valid = True
-        acc = Account.get_one_by_email(data)
+        acc = User.get_one_by_email(data)
         print(acc)
         if not acc:
             flash("Invalid login credentials", "err_login_creds")

@@ -11,25 +11,15 @@
 <body>
     <h1>Registration</h1>
     <form method="post" action="/process">
-        <input type="hidden" name="action" value="register">
-        {% with errors = get_flashed_messages(category_filter=['err_fname']) %}
+        {% with errors = get_flashed_messages(category_filter=['err_username']) %}
             {% if errors %}
                 {% for error in errors %}
                     <p>{{error}}</p>
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        <label for="fname">First Name: </label>
-        <input type="text" name="fname"><br>
-        {% with errors = get_flashed_messages(category_filter=['err_lname']) %}
-            {% if errors %}
-                {% for error in errors %}
-                    <p>{{error}}</p>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <label for="lname">Last Name: </label>
-        <input type="text" name="lname"><br>
+        <label for="username">Username: </label>
+        <input type="text" name="username"><br>
         {% with errors = get_flashed_messages(category_filter=['err_email']) %}
             {% if errors %}
                 {% for error in errors %}

@@ -1,5 +1,5 @@
 from flask_app import app
-from flask_app.models.account import Account
+from flask_app.models.user import User
 from flask import render_template, request, redirect, session
 
 @app.route('/')
@@ -10,6 +10,6 @@ def default_route():
 def success():
     if 'uuid' not in session:
         return redirect('/')
-    acc = Account.get_one_by_id(session)
+    acc = User.get_one_by_id(session)
     print(acc)
-    return render_template("success.html", account=acc)
+    return render_template("shopping_lists.html", user=acc)
