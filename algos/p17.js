@@ -67,7 +67,7 @@ const expected4 = 2;
 const num25 = 4;
 const expected5 = 3;
 
-const num26 = 8;
+const num26 = 50;
 const expected6 = 21;
 
 /**
@@ -77,13 +77,14 @@ const expected6 = 21;
  * @param {number} num The position of the desired number in the fibonacci sequence.
  * @returns {number} The fibonacci number at the given position.
  */
-function fibonacci(num) {
-    if (num <= 0)
-        return 0;
-    else if (num == 1)
-        return 1;
-    else
-        return fibonacci(num-1) + fibonacci(num-2);
+function fibonacci(num, memo={0:0, 1:1}) {
+    // return ((num <= 1) ? num : fibonacci(num-1) + fibonacci(num-2))
+    if (num <= 1)
+        return num;
+    if (num in memo)
+        return memo[num];
+    memo[num] = fibonacci(num-1, memo) + fibonacci(num-2, memo)
+    return memo[num]
 }
 
 console.log(fibonacci(num21))
