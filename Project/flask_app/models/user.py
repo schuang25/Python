@@ -1,10 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app import app, DATABASE
+from flask_app import app, DATABASE, bcrypt
 from flask import flash
 import re
-from flask_bcrypt import Bcrypt
-
-bcrypt = Bcrypt(app)
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
 USERNAME_REGEX = re.compile(r'^[a-zA-Z][a-zA-Z0-9]{1,19}$')
