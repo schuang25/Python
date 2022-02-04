@@ -85,7 +85,7 @@ const two_expected1 = ["1000", "1001", "1100", "1101"];
  * @returns {Array<string>} The expanded versions of the given string.
  */
 function binaryStringExpansion(str, output=[]) {
-    var output_str = "";
+    /*var output_str = "";
     var has_question_mark = false;
     for (var i = 0; i < str.length; i++) {
         if (str[i] == "1" || str[i] == "0")
@@ -99,6 +99,23 @@ function binaryStringExpansion(str, output=[]) {
     }
     if (!has_question_mark)
         output.push(output_str)
+    return output; */
+
+    /* if (str.includes("?")) {
+        output = binaryStringExpansion(str.replace("?", "0"), output)
+        output = binaryStringExpansion(str.replace("?", "1"), output)
+    }
+    else
+        output.push(str)
+    return output; */
+
+    var question_mark = str.indexOf("?");
+    if (question_mark == -1)
+        output.push(str);
+    else {
+        output = binaryStringExpansion(str.slice(0, question_mark) + "0" + str.slice(question_mark + 1), output)
+        output = binaryStringExpansion(str.slice(0, question_mark) + "1" + str.slice(question_mark + 1), output)
+    }
     return output;
 }
 
