@@ -33,12 +33,29 @@ class User:
     @classmethod
     def get_one_by_email(cls, data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
-        return cls(connectToMySQL(DATABASE).query_db(query, data)[0])
+        results = connectToMySQL(DATABASE).query_db(query, data)
+        if results:
+            return cls(results[0])
+        else:
+            return False
+
+    @classmethod
+    def get_one_by_name(cls, data):
+        query = "SELECT * FROM users WHERE username = %(username)s;"
+        results = connectToMySQL(DATABASE).query_db(query, data)
+        if results:
+            return cls(results[0])
+        else:
+            return False
     
     @classmethod
     def get_one_by_id(cls, data):
         query = "SELECT * FROM users WHERE id = %(uuid)s;"
-        return cls(connectToMySQL(DATABASE).query_db(query, data)[0])
+        results = connectToMySQL(DATABASE).query_db(query, data)
+        if results:
+            return cls(results[0])
+        else:
+            return False
 
     @staticmethod
     def validate_registration(data):
@@ -48,6 +65,9 @@ class User:
             is_valid = False
         elif not USERNAME_REGEX.match(data['username']):
             flash("Username must consist of only alphanumeric characters, starting with a letter", "err_username")
+            is_valid = False
+        if User.get_one_by_name(data):
+            flash("Username already exists in database", "err_username")
             is_valid = False
         if not EMAIL_REGEX.match(data['email']):
             flash("Email is not valid!", "err_email")
@@ -66,7 +86,7 @@ class User:
     @staticmethod
     def validate_login(data):
         is_valid = True
-        acc = User.get_one_by_email(data)
+        acc = User.get_one_by_name(data)
         print(acc)
         if not acc:
             flash("Invalid login credentials", "err_login_creds")

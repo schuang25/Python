@@ -9,7 +9,29 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Welcome {{user.first_name}}!</h1>
+    <h1>Welcome {{user.username}}!</h1>
     <a href='/logout'>Logout</a>
+    <h2>Shopping Lists</h2>
+    {% if shopping_lists|length == 0 %}
+        <p>None created, go make one!</p>
+    {% else %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Data Center</th>
+                <th># of Items</th>
+                <th>Actions</th>
+            </tr>
+            {% for list in shopping_lists %}
+                <tr>
+                    <td>{{list.name}}</td>
+                    <td>{{list.data_center}}</td>
+                    <td>{{list.items|length}}</td>
+                    <td><a href="/shopping_lists/edit/{{list.id}}">Edit List</a> | <a href="/shopping_lists/show/{{list.id}}">View/Edit Items</a> | <a href="/shopping_lists/delete/{{list.id}}">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    <p><a href='/shopping_lists/new'>Create a New List</a></p>
 </body>
 </html>

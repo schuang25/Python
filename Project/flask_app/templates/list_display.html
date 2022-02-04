@@ -9,6 +9,27 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    
+    <h1>Welcome {{user.username}}!</h1>
+    <a href='/logout'>Logout</a>
+    <h2>{{shopping_list.name}}</h2>
+    <table>
+        <tr>
+            <th>Item Name</th>
+            <th>Actions</th>
+        </tr>
+        {% for item in shopping_list.items %}
+            <tr>
+                <td>{{item.name}}</td>
+                <td><a href="/search/{{shopping_list.data_center}}/{{item.id}}">View Details</a> | <a href="/shopping_lists/delete_item/{{shopping_list.id}}/{{item.id}}">Delete</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <h3>Add an Item</h3>
+    <form action='/shopping_lists/add_item/{{shopping_list.id}}' method='post'>
+        <label for='item_id'>Item ID:</label>
+        <input type='text' name='item_id'>
+        <input type='submit' value='Add'>
+    </form>
+    <p><a href='/shopping_lists'>Back to Lists</a></p>
 </body>
 </html>

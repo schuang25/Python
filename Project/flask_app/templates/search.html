@@ -10,6 +10,12 @@
 </head>
 <body>
     <div id='container'>
+        {% if user %}
+            <h1>Welcome {{user.username}}!</h1>
+            <a href='/logout'>Logout</a>
+        {% else %}
+            <a href='/'>Login/Register</a>
+        {% endif %}
         <div id='id_search'>
             <h2>Search by Item ID</h2>
             <p>An item's internal ID can be found by searching on other databases, such as <a href="https://garlandtools.org/">Garland Tools</a></p>
@@ -47,10 +53,24 @@
             </form>
         </div>
         <div id='name_search'>
-            <h2>Search by Item Name</h2>
+            <h2>Search by Exact Item Name</h2>
             <form id='name_form' action='/search/name' method='post'>
-                <label for='name'>Item Name:</label>
+                {% with errors = get_flashed_messages(category_filter=['err_invalid_id']) %}
+                    {% if errors %}
+                        {% for error in errors %}
+                            <p>{{error}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <label for='name'>Item Name (case insensitive):</label>
                 <input type='text' name='name'><br>
+                {% with errors = get_flashed_messages(category_filter=['err_no_dc']) %}
+                    {% if errors %}
+                        {% for error in errors %}
+                            <p>{{error}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
                 <label for='dc'>Data Center:</label>
                 <select name='dc'>
                     <option value=''>-- Select a data center --</option>
@@ -66,6 +86,8 @@
                 </select><br>
                 <input type='submit' id='name_submit' value="Search">
             </form>
+            <p><a href='/'>Back to Home</a></p>
         </div>
+    </div>
 </body>
 </html>

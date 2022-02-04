@@ -9,6 +9,27 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    
+    <h1>Welcome {{user.username}}!</h1>
+    <a href='/logout'>Logout</a>
+    <h2>Create New List</h2>
+    <form action='/shopping_lists/create' method='post'>
+        <label for='name'>List Name:</label>
+        <input type='text' name='name'><br>
+        <label for='dc'>Data Center:</label>
+        <select name='dc'>
+            <option value=''>-- Select a data center --</option>
+            <option value='Elemental'>Elemental</option>
+            <option value='Gaia'>Gaia</option>
+            <option value='Mana'>Mana</option>
+            <option value='Aether'>Aether</option>
+            <option value='Primal'>Primal</option>
+            <option value='Crystal'>Crystal</option>
+            <option value='Chaos'>Chaos</option>
+            <option value='Light'>Light</option>
+            <option value='Materia'>Materia</option>
+        </select><br>
+        <input type='submit' value='Create'>
+    </form>
+    <a href='/shopping_lists'>Return to shopping lists</a>
 </body>
 </html>

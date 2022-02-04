@@ -7,29 +7,29 @@ class Item:
         self.name = data['name']
 
     @classmethod
-    def get_item_by_id(self, data):
+    def get_item_by_id(cls, data):
         query = "SELECT * FROM items WHERE id = %(id)s;"
         results = connectToMySQL(DATABASE).query_db(query, data)
         if results:
-            return self(results[0])
+            return cls(results[0])
         else:
             return False
 
     @classmethod
-    def get_item_by_exact_name(self, data):
-        query = "SELECT * FROM items WHERE name = %(name)s;"
+    def get_item_by_exact_name(cls, data):
+        query = "SELECT * FROM items WHERE UPPER(name) = UPPER(%(name)s);"
         results = connectToMySQL(DATABASE).query_db(query, data)
         if results:
-            return self(results[0])
+            return cls(results[0])
         else:
             return False
     
     @classmethod
-    def get_items_by_partial_name(self, data):
+    def get_items_by_partial_name(cls, data):
         query = "SELECT * FROM items WHERE name LIKE CONCAT(\"%\", %(name)s, \"%\");"
         results = connectToMySQL(DATABASE).query_db(query, data)
         items = []
         if results:
             for result in results:
-                items.append(self(result))
+                items.append(cls(result))
         return items

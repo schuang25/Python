@@ -10,7 +10,7 @@
 </head>
 <body>
     <h1>Registration</h1>
-    <form method="post" action="/process">
+    <form method="post" action="/register">
         {% with errors = get_flashed_messages(category_filter=['err_username']) %}
             {% if errors %}
                 {% for error in errors %}
@@ -43,7 +43,7 @@
         <input type="submit" value="Register"><br>
     </form>
     <h1>Login</h1>
-    <form method="post" action="/process">
+    <form method="post" action="/login">
         <input type="hidden" name="action" value="login">
         {% with errors = get_flashed_messages(category_filter=['err_login_creds']) %}
             {% if errors %}
@@ -52,8 +52,8 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        <label for="email">Email Address: </label>
-        <input type="text" name="email"><br>
+        <label for="username">Username: </label>
+        <input type="text" name="username"><br>
         <label for="login_pass">Password: </label>
         <input type="password" name="login_pass"><br>
         <input type="submit" value="Login">

@@ -9,6 +9,12 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    {% if user %}
+        <h1>Welcome {{user.username}}!</h1>
+        <a href='/logout'>Logout</a>
+    {% else %}
+        <a href='/'>Login/Register</a>
+    {% endif %}
     <h2>{{item.name}}</h2>
     <table>
         <tr>
@@ -24,6 +30,7 @@
             </tr>
         {% endfor %}
     </table>
-    <a href='/search'>Return to search</a>
+    <p><a href='/search'>Return to search</a></p>
+    <p><a href='/'>Back to Home</a></p>
 </body>
 </html>
