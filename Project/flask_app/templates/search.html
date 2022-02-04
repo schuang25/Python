@@ -12,7 +12,8 @@
     <div id='container'>
         {% if user %}
             <h1>Welcome {{user.username}}!</h1>
-            <a href='/logout'>Logout</a>
+            <p><a href='/shopping_lists'>Shopping Lists</a></p>
+            <p><a href='/logout'>Logout</a></p>
         {% else %}
             <a href='/'>Login/Register</a>
         {% endif %}

@@ -10,7 +10,8 @@
 </head>
 <body>
     <h1>Welcome {{user.username}}!</h1>
-    <a href='/logout'>Logout</a>
+    <p><a href='/search'>Item Search</a></p>
+    <p><a href='/logout'>Logout</a></p>
     <h2>Shopping Lists</h2>
     {% if shopping_lists|length == 0 %}
         <p>None created, go make one!</p>
